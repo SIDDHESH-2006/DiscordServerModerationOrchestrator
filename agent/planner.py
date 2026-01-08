@@ -8,7 +8,6 @@ llm = ChatOpenAI(
     temperature=0,
     api_key=get_openai_api_key()
 )
-
 planner_chain = PROMPT_TEMPLATE | llm.with_structured_output(ExecutionPlan)
 
 async def generate_execution_plan(user_input: str, guild_id: int) -> ExecutionPlan:
