@@ -281,3 +281,72 @@ async def remove_bot_from_guild(
         "status": "bot_removed",
         "bot_user_id": bot_user_id
     }
+
+async def get_member(guild_id: int, user_id: int, client: httpx.AsyncClient) -> dict:
+    """
+    Fetch a member from a Discord guild.
+    """
+    url = f"{DISCORD_API_BASE}/guilds/{guild_id}/members/{user_id}"
+    response = await client.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()
+
+
+async def get_ban(guild_id: int, user_id: int, client: httpx.AsyncClient) -> dict:
+    """
+    Fetch a ban object for a user in a guild.
+    """
+    url = f"{DISCORD_API_BASE}/guilds/{guild_id}/bans/{user_id}"
+    response = await client.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()
+
+
+async def add_role_to_member(
+    guild_id: int,
+    user_id: int,
+    role_id: int,
+    client: httpx.AsyncClient
+) -> dict:
+    """
+    Add a role to a guild member.
+    """
+    url = f"{DISCORD_API_BASE}/guilds/{guild_id}/members/{user_id}/roles/{role_id}"
+    response = await client.put(url, headers=get_headers())
+    response.raise_for_status()
+    
+    return {
+        "status": "role_added",
+        "user_id": user_id,
+        "role_id": role_id
+    }
+
+
+async def remove_role_from_member(
+    guild_id: int,
+    user_id: int,
+    role_id: int,
+    client: httpx.AsyncClient
+) -> dict:
+    """
+    Remove a role from a guild member.
+    """
+    url = f"{DISCORD_API_BASE}/guilds/{guild_id}/members/{user_id}/roles/{role_id}"
+    response = await client.delete(url, headers=get_headers())
+    response.raise_for_status()
+    
+    return {
+        "status": "role_removed",
+        "user_id": user_id,
+        "role_id": role_id
+    }
+
+
+async def get_guild(guild_id: int, client: httpx.AsyncClient) -> dict:
+    """
+    Fetch details about a guild.
+    """
+    url = f"{DISCORD_API_BASE}/guilds/{guild_id}"
+    response = await client.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()

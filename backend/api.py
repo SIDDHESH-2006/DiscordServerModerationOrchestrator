@@ -52,5 +52,14 @@ async def execute_action(action: Action, guild_id: int, client):
         await execution.delete_channel(guild_id, action.name, client)
     elif action.action_type == "create_invite":
         await execution.create_invite(guild_id, action.channel_name, action.max_uses, action.expires_in_minutes, client)
-    # TODO: Add moderation actions
+    elif action.action_type == "kick_user":
+        await execution.remove_user(guild_id, action.user_id, client)
+    elif action.action_type == "ban_user":
+        await execution.ban_user(guild_id, action.user_id, client)
+    elif action.action_type == "unban_user":
+        await execution.unban_user(guild_id, action.user_id, client)
+    elif action.action_type == "mute_user":
+        await execution.mute_user(guild_id, action.user_id, True, client)
+    elif action.action_type == "unmute_user":
+        await execution.mute_user(guild_id, action.user_id, False, client)
 
