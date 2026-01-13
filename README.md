@@ -1,16 +1,16 @@
-# 🤖 Discord Server Moderation Orchestrator
+# Discord Server Moderation Orchestrator
 
 Intelligent Discord bot that uses AI to automate server management tasks. Tell it what you want, and it automatically creates roles, channels, handles moderation, and more!
 
-## ✨ Features
+## Features
 
-- 🎯 **Natural Language Commands**: Just describe what you want ("Create a moderator role")
-- 🧠 **AI-Powered Planning**: Uses OpenAI/OpenRouter to understand your intent
-- ⚡ **Automated Execution**: Automatically creates roles, channels, manages permissions
-- 🛡️ **Safe Operations**: All actions require "Manage Server" permission
-- 🔄 **Extensible**: Easy to add new action types
+- **Natural Language Commands**: Just describe what you want ("Create a moderator role")
+- **AI-Powered Planning**: Uses OpenAI/OpenRouter to understand your intent
+- **Automated Execution**: Automatically creates roles, channels, manages permissions
+- **Safe Operations**: All actions require "Manage Server" permission
+- **Extensible**: Easy to add new action types
 
-## 🚀 Quick Start (5 minutes)
+## Quick Start (5 minutes)
 
 ### 1. Prerequisites
 - **Python 3.9+** - Download from https://python.org
@@ -60,13 +60,13 @@ Then try:
 /orchestrate Create a moderation team with a mod role and mod-log channel
 ```
 
-## 📖 Complete Guides
+## Complete Guides
 
 - **[QUICKSTART.md](QUICKSTART.md)** - 5-minute setup guide
 - **[DISCORD_SETUP.md](DISCORD_SETUP.md)** - Detailed Discord configuration steps
 - **[validate.py](validate.py)** - Run to check if everything is set up
 
-## 🏗️ How It Works
+## How It Works
 
 ```
 You in Discord
@@ -86,7 +86,7 @@ Discord API (Creates role, channel, etc.)
 Result back to Discord
 ```
 
-## 🎮 Usage Examples
+## Usage Examples
 
 ```
 /orchestrate Create a moderation team with admin and mod roles
@@ -95,7 +95,7 @@ Result back to Discord
 /orchestrate Archive inactive channels
 ```
 
-## 🔧 Setup Steps
+## Setup Steps
 
 1. **Create Discord Application**
    - Go to [Developer Portal](https://discord.com/developers/applications)
@@ -133,14 +133,14 @@ Result back to Discord
    /ping
    ```
 
-## 🔍 Validation
+## Validation
 
 Check if everything is set up correctly:
 ```bash
 python validate.py
 ```
 
-## 📚 Project Structure
+## Project Structure
 
 ```
 bot/              → Discord bot commands
@@ -152,7 +152,7 @@ validate.py       → Setup checker
 requirements.txt  → Python packages
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -161,7 +161,7 @@ requirements.txt  → Python packages
 | API key error | Verify key format: `sk-or-v1-` or `sk-` |
 | Missing permissions | Move bot role above others in server roles |
 
-## 📦 Dependencies
+## Dependencies
 
 - `discord.py` - Bot framework
 - `fastapi` - API server
@@ -171,7 +171,7 @@ requirements.txt  → Python packages
 - `httpx` - HTTP client
 - `python-dotenv` - Environment config
 
-## 🚀 Next Steps
+## Next Steps
 
 1. Run `python validate.py` - Check setup
 2. Read [QUICKSTART.md](QUICKSTART.md) - Get started in 5 min
