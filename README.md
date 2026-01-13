@@ -15,7 +15,6 @@ Intelligent Discord bot that uses AI to automate server management tasks. Tell i
 ### 1. Prerequisites
 - **Python 3.9+** - Download from https://python.org
 - **Discord Bot Token** - Create at https://discord.com/developers/applications
-- **OpenRouter API Key** - Free at https://openrouter.ai (alternative: OpenAI API key)
 
 ### 2. Install & Configure
 
