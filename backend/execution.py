@@ -52,14 +52,18 @@ async def create_role(guild_id: int, payload: dict, client: httpx.AsyncClient) -
             "name": existing["name"]
         }
 
-    # Step 3: Send request to create a new role
+    # Step 3: Prepare payload - set default permissions for admin roles
+    if "admin" in payload.get("name", "").lower() and "permissions" not in payload:
+        payload["permissions"] = 8
+
+    # Step 4: Send request to create a new role
     url = f"{DISCORD_API_BASE}/guilds/{guild_id}/roles"
     response = await client.post(url, headers=get_headers(), json=payload)
     response.raise_for_status()
 
     created = response.json()
 
-    # Step 4: Return clean structure
+    # Step 5: Return clean structure
     return {
         "status": "created",
         "id": created["id"],
@@ -91,14 +95,54 @@ async def create_channel(guild_id: int, payload: dict, client: httpx.AsyncClient
             "name": existing["name"]
         }
 
-    # Step 3: Send request to create a new channel
+    # Step 3: Prepare payload - convert type string to Discord integer
+    # Discord channel types: 0=text, 1=DM, 2=voice, 3=group DM, 4=category, 5=announcement, 10=announcement thread, 11=public thread, 12=private thread
+    channel_type_map = {
+        "text": 0,
+        "voice": 2,
+        "category": 4,
+        "announcement": 5
+    }
+    
+    prepared_payload = {
+        "name": payload.get("name"),
+    }
+    
+    # Convert type string to integer if provided
+    if "type" in payload and payload["type"]:
+        channel_type_str = payload["type"]
+        prepared_payload["type"] = channel_type_map.get(channel_type_str, 0)  # Default to text if unknown
+    
+    # Add optional fields if provided
+    if payload.get("topic"):
+        prepared_payload["topic"] = payload["topic"]
+    
+    # Handle category - convert category name to parent_id
+    if payload.get("category"):
+        category_name = payload["category"]
+        # Find the category by name
+        category = find_by_name(channels, category_name)
+        if category:
+            prepared_payload["parent_id"] = category["id"]
+            print(f"   📁 Found category '{category_name}' with ID {category['id']}")
+        else:
+            print(f"   ⚠️  Category '{category_name}' not found, creating without category")
+    
+    print(f"   📦 Prepared Discord API payload: {prepared_payload}")
+
+    # Step 4: Send request to create a new channel
     url = f"{DISCORD_API_BASE}/guilds/{guild_id}/channels"
-    response = await client.post(url, headers=get_headers(), json=payload)
+    print(f"   🔗 POST {url}")
+    response = await client.post(url, headers=get_headers(), json=prepared_payload)
+    
+    if response.status_code != 201:
+        print(f"   ❌ Discord API returned {response.status_code}: {response.text}")
+    
     response.raise_for_status()
 
     created = response.json()
 
-    # Step 4: Return clean structure
+    # Step 5: Return clean structure
     return {
         "status": "created",
         "id": created["id"],
